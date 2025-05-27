@@ -55,7 +55,9 @@ class QuestionController extends Controller
 
         $grouped_answers = $user_answers->groupBy('question_id');
 
-        $total_questions = $grouped_answers->count();
+        $total_questions = Question::where('test_id', $test_id)
+        ->pluck('id')
+        ->count();
 
         // Подсчитываем количество правильно отвеченных вопросов
         $correct_questions = $grouped_answers->filter(function ($current_question_answers, $question_id) {
