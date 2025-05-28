@@ -20,12 +20,12 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
 Route::post('/accept-application/{application}', [AcceptanceOfApplicationController::class, 'store'])
     ->middleware('auth')
     ->middleware('admin')
-    ->name('accept');
+    ->name('accept.store');
 
 Route::delete('/accept-application/{application}', [AcceptanceOfApplicationController::class, 'destroy'])
     ->middleware('auth')
     ->middleware('admin')
-    ->name('accept');
+    ->name('accept.destroy');
 
 // Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
 //     ->middleware('guest')
