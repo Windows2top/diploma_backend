@@ -16,17 +16,13 @@ return [
     */
 
     'paths' => [
-        'registration',
-        'accept-application/*',
-        'login',
-        'logout',
         'api/*',
         'sanctum/csrf-cookie'
     ],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('FRONTEND_URL', 'https://app.arch-pc.ru:5173')],
+    'allowed_origins' => [env('FRONTEND_URL', 'https://arch-pc.ru')],
 
     'allowed_origins_patterns' => [],
 

@@ -17,15 +17,12 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): JsonResponse
     {
         $token = DB::transaction(function () use ($request){
+            
             $request->authenticate();
-    
-            $request->session()->regenerate();
     
             $user = Auth::user();
     
-            $user->tokens()->delete();
-    
-            return $user->createToken('api_token')->plainTextToken;
+            return $user->createToken($request->input('userAgent'))->plainTextToken;
     
         });
 
@@ -37,11 +34,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): JsonResponse
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json(null, 204);
     }
