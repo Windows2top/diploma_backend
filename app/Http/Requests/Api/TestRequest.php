@@ -22,7 +22,7 @@ class TestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => ['required', 'max:255'],
+            'description' => ['required'],
             'title' => ['required', 'max:60'],
             'lection' => 'required',
             'questions' => ['required', 'array'],
@@ -37,7 +37,6 @@ class TestRequest extends FormRequest
     public function messages(): array {
         return [
             'description.required' => 'Описание должно быть обязательн',
-            'description.max' => 'Описание не может превышать 255 символов',
             'title.required' => 'Заголовок теста обязателен.',
             'title.max' => 'Заголовок теста не должен превышать 60 символов.',
             'lection.required' => 'Лекции обязаны быть указаны.',
