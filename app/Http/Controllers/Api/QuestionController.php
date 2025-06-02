@@ -89,17 +89,17 @@ class QuestionController extends Controller
             $user->answers()->detach();
 
             return response()->json([
-                'message' => 'Лекция не усвоена',
                 'grade' => $grade,
                 'total_questions' => $total_questions,
                 'correct_questions' => $correct_questions,
             ], 200);
         } else {
-            $user->tests()->syncWithoutDetaching([$test_id]);
+            $user->tests()->syncWithoutDetaching([
+                $test_id => ['grade' => $grade]
+            ]);
             $user->answers()->detach();
 
             return response()->json([
-                'message' => 'Лекция усвоена',
                 'grade' => $grade,
                 'total_questions' => $total_questions,
                 'correct_questions' => $correct_questions,

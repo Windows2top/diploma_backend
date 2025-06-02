@@ -54,7 +54,7 @@ class User extends Authenticatable
      * Get the tests for this user.
      */
     public function tests() {
-        return $this->belongsToMany(Test::class);
+        return $this->belongsToMany(Test::class)->withPivot('grade');
     }
 
     /**
