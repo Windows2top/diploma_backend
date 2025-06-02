@@ -75,26 +75,34 @@ class QuestionController extends Controller
             return $user_answers_ids->toArray() === $correct_answer_ids->toArray();
         })->count();
 
-        if ($correct_questions < $total_questions) {
+        $calculateGrade = function ($percents) {
+            if ($percents >= 90) return 5;
+            if ($percents >= 75) return 4;
+            if ($percents >= 60) return 3;
+            return 2;
+        };
 
+        $percents = ($correct_questions / $total_questions) * 100;
+        $grade = $calculateGrade($percents);
+
+        if ($percents < 60) {
             $user->answers()->detach();
-    
+
             return response()->json([
                 'message' => 'Лекция не усвоена',
+                'grade' => $grade,
                 'total_questions' => $total_questions,
-                'correct_questions' => $correct_questions
+                'correct_questions' => $correct_questions,
             ], 200);
-
         } else {
-
             $user->tests()->syncWithoutDetaching([$test_id]);
-    
             $user->answers()->detach();
-    
+
             return response()->json([
                 'message' => 'Лекция усвоена',
+                'grade' => $grade,
                 'total_questions' => $total_questions,
-                'correct_questions' => $correct_questions
+                'correct_questions' => $correct_questions,
             ], 201);
         }
     }
